@@ -1,0 +1,5 @@
+settings.json
+node_modules/
+mongo_example.js
+.env
+.DS_Store
