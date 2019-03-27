@@ -37,7 +37,7 @@ client.connect((err) => {
 
   console.log('Inserting...');
 
-  let insert1 = {id: "6", first_name: firstName, last_name: lastName, birthdate: birthDate};
+  let insert1 = {first_name: firstName, last_name: lastName, birthdate: birthDate};
 
   knex.insert(insert1).into("famous_people").then(function (id) {
     //console.log(id);
