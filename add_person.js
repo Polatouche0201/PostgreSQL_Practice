@@ -1,4 +1,6 @@
-var search = process.argv[2];
+var firstName = process.argv[2];
+var lastName = process.argv[3];
+var birthDate = process.argv[4];
 
 const pg = require("pg");
 const settings = require("./settings"); // settings.json
@@ -33,22 +35,18 @@ client.connect((err) => {
     return console.error("Connection Error", err);
   }
 
-  console.log('Searching...');
+  console.log('Inserting...');
 
-  knex.select('*').from('famous_people').where({first_name: search}).orWhere({last_name: search})
-  .then(function(rows) {
+  let insert1 = {id: "6", first_name: firstName, last_name: lastName, birthdate: birthDate};
 
-    console.log(`Found ${rows.length} person(s) by the name '${search}':`);
-    for(let i in rows) {
-      console.log(`- ${i}: ${rows[i].first_name} ${rows[i].last_name}, born '${rows[i].birthdate}'`);
-    }
-
+  knex.insert(insert1).into("famous_people").then(function (id) {
+    //console.log(id);
   })
-  .then(function () {
-    return knex.destroy();
-  }).then(function () {
-    console.log('Search Done.');
+  .finally(function() {
+    knex.destroy();
   });
+
+  console.log('Inserted');
 
   client.end();
 
